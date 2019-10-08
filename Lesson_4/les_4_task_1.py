@@ -1,82 +1,86 @@
 #!/usr/bin/python3
 # coding: utf-8
+
+# Проанализировать скорость и сложность одного любого алгоритма из разработанных 
+# в рамках домашнего задания первых трех уроков.
+# Примечание. Идеальным решением будет:
+# a. выбрать хорошую задачу, которую имеет смысл оценивать,
+# b. написать 3 варианта кода (один у вас уже есть),
+# c. проанализировать 3 варианта и выбрать оптимальный,
+# d. результаты анализа вставить в виде комментариев в файл с кодом (не забудьте указать, 
+# для каких N вы проводили замеры),
+# e. написать общий вывод: какой из трёх вариантов лучше и почему.
+
+
 # Вводятся три разных числа. 
 # Найти, какое из них является средним (больше одного, но меньше другого).
 
 import timeit
 import cProfile
 ## ВАРИАНТ №1
-# def average_number(a, b, c): 
-#     if b < a < c or c < a < b: 
-#         return print('среднее число:', a) 
-#     elif a < b < c or c < b < a:
-#         return print('среднее число:', b)
-#     else: 
-#         return print('среднее число:', c)
+def average_number1(a, b, c): 
+    if b < a < c or c < a < b: 
+        return print('среднее число:', a) 
+    elif a < b < c or c < b < a:
+        return print('среднее число:', b)
+    else: 
+        return print('среднее число:', c)
 
 ## ВАРИАНТ №2
-# def average_number(a, b, c): 
-#     if b > a and a > c or c > a and a > b:
-#         return print('среднее число:', a) 
-#     if a > b and b > c or c > b and b > a: 
-#         return print('среднее число:', b)
-#     if a > c and c > b or b > c and c > a: 
-#         return print('среднее число:', c)
+def average_number2(a, b, c): 
+    if b > a and a > c or c > a and a > b:
+        return print('среднее число:', a) 
+    if a > b and b > c or c > b and b > a: 
+        return print('среднее число:', b)
+    if a > c and c > b or b > c and c > a: 
+        return print('среднее число:', c)
 
 
-# print ('Введите пожалуйста три числа а b c : ')
-# a = int(input())
-# b = int(input())
-# c = int(input())
+print ('Введите пожалуйста три числа а b c : ')
+a = int(input())
+b = int(input())
+c = int(input())
+average_number1(a, b, c)
 
+## ВАРИАНТ №3
 arr = []  # заводим пустой список
-n = 3
+n = 3     # длина массива
 print ('Введите пожалуйста три числа а b c : ')
 for i in range(n):  
     arr.append(int(input()))
 print(arr)
-#print(arr[1])
+arr = sorted(arr)
 if arr[1] != max(arr) and arr[1] != min(arr):
     print('среднее число:', arr[1])
 else: 
-    print()
+    print('среднее число:', arr[1])
 
 #average_number(a, b, c)
 #cProfile.run('average_number(1585, 1595, 1599)')
-
-# if b > a and a > c or c > a and a > b:
-#     print('среднее число:', a) 
-# if a > b and b > c or c > b and b > a: 
-#     print('среднее число:', b)
-# if a > c and c > b or b > c and c > a: 
-#     print('среднее число:', c)
-
-# if b < a < c or c < a < b:
-#     print('среднее число:', a)
-# elif a < b < c or c < b < a:
-#     print('среднее число:', b)
-# else:
-#     print('среднее число:', c) 
 
 # Тест с помощью timeit 
 # Тест на числах 1 2 3 
 # 100 loops, best of 3: 0.0405 usec per loop - ВАРИАНТ №1
 # 100 loops, best of 3: 0.0215 usec per loop - ВАРИАНТ №2
+# 100 loops, best of 3: 0.0381 usec per loop - ВАРИАНТ №3
 
 # Тест на числах 85 95 99
 # 100 loops, best of 3: 0.0191 usec per loop - ВАРИАНТ №1
 # 100 loops, best of 3: 0.031 usec per loop - ВАРИАНТ №2
+# 100 loops, best of 3: 0.0501 usec per loop - ВАРИАНТ №3
 
 # Тест на числах 585 595 599
 # 100 loops, best of 3: 0.0191 usec per loop - ВАРИАНТ №1
 # 100 loops, best of 3: 0.0191 usec per loop - ВАРИАНТ №2
+# 100 loops, best of 3: 0.0405 usec per loop - ВАРИАНТ №3
 
 # Тест на числах 1585 1595 1599
 # 100 loops, best of 3: 0.0191 usec per loop - ВАРИАНТ №1
 # 100 loops, best of 3: 0.0405 usec per loop - ВАРИАНТ №2
+# 100 loops, best of 3: 0.0477 usec per loop - ВАРИАНТ №3
 
 # Тест с помощью cProfile 
-# Данные варианта №1 и №2 совпадают
+# Данные варианта №1, №2 и №3 совпадают
 # Во всех заданных параметрах время выполнения одинаково
 
 # среднее число: 1595
@@ -90,3 +94,10 @@ else:
 #         1    0.000    0.000    0.000    0.000 {built-in method builtins.exec}
 #         1    0.000    0.000    0.000    0.000 {built-in method builtins.print}
 #         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+# Общий вывод
+# Анализ с помощью модуля timeit показал, что 
+# для чисел => xx оптимально использовать ВАРИАНТ №1 
+# для чисел = x оптимально использовать ВАРИАНТ №2
+
+# Анализ с помощью модуля cProfile показал, что скорость работы всех ВАРИАНТОВ равны (различие нет).
